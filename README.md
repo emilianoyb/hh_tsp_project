@@ -1,7 +1,7 @@
 # Hiper-heurística de selección para TSP
 
 Dado una instancia de TSP, un clasificador predice cuál de tres algoritmos obtiene el menor costo:
-2-opt hill climbing, SA + 2-opt o MST + 2-opt. El reporte completo está en `reporte_final.docx`.
+2-opt hill climbing, SA + 2-opt o MST + 2-opt.
 
 ## Cómo correrlo
 
