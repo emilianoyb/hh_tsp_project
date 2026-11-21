@@ -119,12 +119,13 @@ ct.to_csv(f"{RES}/winners_by_dist_n.csv")
 allf["sa_vs_hc"] = (allf.cost_sa_2opt / allf.cost_2opt_hill_climbing - 1) * 100
 allf["mst_vs_hc"] = (allf.cost_mst_2opt / allf.cost_2opt_hill_climbing - 1) * 100
 out["rel_vs_hc_by_n"] = allf.groupby("n")[["sa_vs_hc", "mst_vs_hc"]].mean().round(2).to_dict("index")
+out["rel_vs_hc_median_by_dist"] = allf.groupby("distribution")[["sa_vs_hc", "mst_vs_hc"]].median().round(2).to_dict("index")
 out["rel_vs_hc_by_dist"] = allf.groupby("distribution")[["sa_vs_hc", "mst_vs_hc"]].mean().round(2).to_dict("index")
 
 # ---- figuras ----
 from sklearn.tree import plot_tree
 fig, ax = plt.subplots(figsize=(14, 7))
-plot_tree(m, feature_names=list(Xtr.columns), class_names=ALGS, filled=True, ax=ax, fontsize=7, max_depth=4)
+plot_tree(m, feature_names=list(Xtr.columns), class_names=list(m.classes_), filled=True, ax=ax, fontsize=7, max_depth=4)
 fig.savefig(f"{RES}/tree.png", dpi=150, bbox_inches="tight"); plt.close(fig)
 
 fig, ax = plt.subplots(figsize=(5, 4))
@@ -144,7 +145,7 @@ for ax, col, order in [(axs[0], "distribution", ["uniform", "clustered", "border
     ct = pd.crosstab(allf[col], allf.best_algorithm).reindex(index=order, columns=ALGS, fill_value=0)
     (ct.div(ct.sum(axis=1), axis=0) * 100).plot.bar(stacked=True, ax=ax, color=["#4472C4", "#ED7D31", "#70AD47"], legend=False, rot=0)
     ax.set_ylabel("% instancias ganadas"); ax.set_xlabel(col)
-axs[1].legend(["2-opt HC", "SA+2-opt", "MST+2-opt"], fontsize=7)
+axs[1].legend(["2-opt HC", "SA+2-opt", "MST+2-opt"], fontsize=7, loc="upper center", bbox_to_anchor=(0.5, 1.18), ncol=3, frameon=False)
 fig.tight_layout(); fig.savefig(f"{RES}/winners.png", dpi=150); plt.close(fig)
 
 json.dump(out, open(f"{RES}/metrics.json", "w"), indent=1, default=str)

@@ -288,6 +288,20 @@
    "mst_vs_hc": -2.34
   }
  },
+ "rel_vs_hc_median_by_dist": {
+  "border": {
+   "sa_vs_hc": 0.0,
+   "mst_vs_hc": 0.0
+  },
+  "clustered": {
+   "sa_vs_hc": -1.52,
+   "mst_vs_hc": 0.0
+  },
+  "uniform": {
+   "sa_vs_hc": -2.6,
+   "mst_vs_hc": -0.15
+  }
+ },
  "rel_vs_hc_by_dist": {
   "border": {
    "sa_vs_hc": -1.33,
